@@ -1,8 +1,8 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 8080
+ENV ASPNETCORE_URLS=http://*:8080
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
@@ -18,4 +18,8 @@ RUN dotnet publish "maxApi.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+LABEL io.k8s.display-name="rubic" \
+      io.k8s.description="container description..." \
+      io.openshift.expose-services="8080:http"
+
 ENTRYPOINT ["dotnet", "maxApi.dll"]

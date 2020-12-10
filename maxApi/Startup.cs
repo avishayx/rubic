@@ -34,8 +34,8 @@ namespace maxApi
                    }).AddJwtBearer(o =>
                    {
                        //for example https://localhost:8080/auth/realms/Master,
-                       o.Authority = Configuration["https://sso-max-ssomax.apps.na311.openshift.opentlc.com/auth/realms/max-sso/"];
-                       o.Audience = Configuration["clientid-01"];
+                       o.Authority = "https://sso-max-ssomax.apps.na311.openshift.opentlc.com/auth/realms/max-sso/";
+                       o.Audience = "clientid-01";
                        o.Events = new JwtBearerEvents()
                        {
                            OnAuthenticationFailed = c =>

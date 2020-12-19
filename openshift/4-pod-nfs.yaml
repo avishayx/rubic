@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-rubic
+spec:
+  volumes:
+  - name: keytab-name
+    persistentVolumeClaim:
+      claimName: pvc-nfs-pv1
+  nodeSelector:
+    type: user-node 
+  containers:
+    - name: rubic-fedora-container
+      image: fedora:26
+      command: ["/bin/sh", "-c"]
+      args: [ "tail -f /dev/null" ]
+  volumeMounts:
+        - name: keytab-name
+          mountPath: /tmp

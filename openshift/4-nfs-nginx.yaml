@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: rubic
+  name: rubic-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: rubic
+  template:
+    metadata:
+      labels:
+        run: rubic
+    spec:
+      volumes:
+      - name: keytab-name
+        persistentVolumeClaim:
+          claimName: pvc-nfs-pv1
+      containers:
+      - image: quay.io/asebban/rubic:1.0
+        name: rubic
+        volumeMounts:
+        - name: keytab-name
+          mountPath: /tmp
